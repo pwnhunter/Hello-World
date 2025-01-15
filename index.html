@@ -61,6 +61,24 @@
             transform: scale(1.1);
         }
 
+        /* Volume Control */
+        .volume-control {
+            position: absolute;
+            bottom: 60px;
+            right: 10px;
+            text-align: center;
+            color: white;
+            font-size: 12px;
+            z-index: 200;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .volume-control input {
+            width: 100px;
+        }
+
         /* Desktop Icons */
         .desktop {
             position: relative;
@@ -128,6 +146,12 @@
         Your browser does not support the audio element.
     </audio>
 
+    <!-- Volume Control -->
+    <div class="volume-control">
+        <span>Volume</span>
+        <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="1">
+    </div>
+
     <!-- Desktop -->
     <div class="desktop">
         <!-- PWN Icon -->
@@ -184,6 +208,13 @@
             const gameWindow = document.getElementById('gameWindow');
             gameWindow.style.display = 'block';
         }
+
+        // Volume Control
+        const volumeSlider = document.getElementById('volumeSlider');
+        const backgroundMusic = document.getElementById('backgroundMusic');
+        volumeSlider.addEventListener('input', (e) => {
+            backgroundMusic.volume = e.target.value;
+        });
 
         // Block Right-Click and Inspect
         document.addEventListener('contextmenu', (e) => {
