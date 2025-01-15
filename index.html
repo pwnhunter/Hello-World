@@ -5,56 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Windows XP Desktop</title>
     <style>
-        /* Reset and Global Styles */
+        /* Global Reset */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        body, html {
+
+        html, body {
             width: 100%;
             height: 100%;
-            overflow: hidden;
             font-family: "Tahoma", sans-serif;
-            background: url('file-M9fEoMXb66Zw2oXa2RUsnc') no-repeat center center fixed;
+            overflow: hidden;
+            background: url('file-8s7tLgimREjEkRJVueNKCq') no-repeat center center fixed;
             background-size: cover;
-            cursor: default;
-        }
-
-        /* Desktop Icons */
-        .desktop {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-wrap: wrap;
-            align-content: flex-start;
-            padding: 10px;
-        }
-
-        .icon {
-            width: 100px;
-            text-align: center;
-            margin: 10px;
-            cursor: pointer;
-        }
-
-        .icon img {
-            width: 64px;
-            height: 64px;
-            margin-bottom: 5px;
-            transition: transform 0.2s;
-        }
-
-        .icon img:hover {
-            transform: scale(1.1);
-        }
-
-        .icon span {
-            display: block;
-            font-size: 14px;
-            color: white;
-            text-shadow: 1px 1px 2px black;
         }
 
         /* Taskbar */
@@ -69,6 +33,7 @@
             align-items: center;
             justify-content: flex-start;
             box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5);
+            z-index: 100;
         }
 
         .start-button {
@@ -80,7 +45,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-left: 5px;
+            margin-left: 10px;
             cursor: pointer;
             transition: background 0.3s;
         }
@@ -100,51 +65,58 @@
             color: black;
         }
 
-        /* Popup (Start Menu) */
-        .popup {
-            position: absolute;
-            bottom: 50px;
-            left: 5px;
-            width: 200px;
-            background: #1e90ff;
-            color: white;
-            border: 1px solid #104e8b;
-            display: none;
-            z-index: 10;
-            padding: 10px;
-            border-radius: 5px;
+        /* Desktop Icons */
+        .desktop {
+            position: relative;
+            width: 100%;
+            height: calc(100% - 40px); /* Account for the taskbar */
+            display: flex;
+            flex-wrap: wrap;
+            padding: 20px;
         }
 
-        .popup ul {
-            list-style: none;
-        }
-
-        .popup ul li {
-            padding: 5px 10px;
-            margin: 5px 0;
-            background: white;
-            color: black;
-            border-radius: 3px;
+        .icon {
+            width: 100px;
+            margin: 10px;
+            text-align: center;
             cursor: pointer;
-            transition: background 0.3s;
         }
 
-        .popup ul li:hover {
-            background: #87ceeb;
+        .icon img {
+            width: 64px;
+            height: 64px;
+            transition: transform 0.2s ease;
+        }
+
+        .icon img:hover {
+            transform: scale(1.1);
+        }
+
+        .icon span {
+            display: block;
+            font-size: 12px;
+            margin-top: 5px;
             color: white;
+            text-shadow: 1px 1px 2px black;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 2px;
+            border-radius: 3px;
         }
 
-        /* Window Popup */
+        /* Popup Window */
         .window {
             position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             width: 400px;
             height: 300px;
             background: white;
             border: 2px solid black;
             border-radius: 5px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            z-index: 200;
             display: none;
-            z-index: 20;
         }
 
         .window-header {
@@ -152,14 +124,14 @@
             padding: 10px;
             color: white;
             font-size: 16px;
-            font-weight: bold;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border-bottom: 2px solid black;
         }
 
         .window-content {
-            padding: 10px;
+            padding: 20px;
             font-size: 14px;
             color: black;
         }
@@ -167,7 +139,7 @@
         .close-btn {
             background: white;
             border: none;
-            font-size: 16px;
+            font-size: 14px;
             cursor: pointer;
         }
     </style>
@@ -175,9 +147,9 @@
 <body>
     <!-- Desktop -->
     <div class="desktop">
-        <!-- PWN Icon -->
+        <!-- Example Icon -->
         <div class="icon" onclick="openWindow()">
-            <img src="https://via.placeholder.com/64?text=PWN" alt="PWN">
+            <img src="file-RZBe1DHQXHEy9prgN41wcL" alt="PWN Icon">
             <span>PWN</span>
         </div>
     </div>
@@ -185,24 +157,15 @@
     <!-- Taskbar -->
     <div class="taskbar">
         <div class="start-button" onclick="toggleStartMenu()">
-            <img src="https://via.placeholder.com/20?text=Start" alt="Start">
+            <img src="https://via.placeholder.com/20?text=Start" alt="Start Icon">
             <span>Start</span>
         </div>
     </div>
 
-    <!-- Start Menu Popup -->
-    <div class="popup" id="startMenu">
-        <ul>
-            <li onclick="alert('Launching Notepad...')">Notepad</li>
-            <li onclick="alert('Opening Discord...')">Discord</li>
-            <li onclick="alert('Opening Terminal...')">Terminal</li>
-        </ul>
-    </div>
-
-    <!-- Window -->
-    <div class="window" id="pwnWindow">
+    <!-- Popup Window -->
+    <div class="window" id="window">
         <div class="window-header">
-            <span>PWN Window</span>
+            <span>Window Title</span>
             <button class="close-btn" onclick="closeWindow()">X</button>
         </div>
         <div class="window-content">
@@ -212,18 +175,15 @@
 
     <script>
         function toggleStartMenu() {
-            const startMenu = document.getElementById('startMenu');
-            startMenu.style.display = startMenu.style.display === 'block' ? 'none' : 'block';
+            alert('Start menu clicked (not yet implemented)');
         }
 
         function openWindow() {
-            const window = document.getElementById('pwnWindow');
-            window.style.display = 'block';
+            document.getElementById('window').style.display = 'block';
         }
 
         function closeWindow() {
-            const window = document.getElementById('pwnWindow');
-            window.style.display = 'none';
+            document.getElementById('window').style.display = 'none';
         }
     </script>
 </body>
