@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Windows XP Desktop</title>
+    <style>
+        /* Reset and Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body, html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: "Tahoma", sans-serif;
+            background: url('file-M9fEoMXb66Zw2oXa2RUsnc') no-repeat center center fixed;
+            background-size: cover;
+            cursor: default;
+        }
+
+        /* Desktop Icons */
+        .desktop {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            align-content: flex-start;
+            padding: 10px;
+        }
+
+        .icon {
+            width: 100px;
+            text-align: center;
+            margin: 10px;
+            cursor: pointer;
+        }
+
+        .icon img {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 5px;
+            transition: transform 0.2s;
+        }
+
+        .icon img:hover {
+            transform: scale(1.1);
+        }
+
+        .icon span {
+            display: block;
+            font-size: 14px;
+            color: white;
+            text-shadow: 1px 1px 2px black;
+        }
+
+        /* Taskbar */
+        .taskbar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40px;
+            background: linear-gradient(to top, #1c86ee, #104e8b);
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .start-button {
+            width: 80px;
+            height: 30px;
+            background: linear-gradient(to top, #ffffff, #d6d6d6);
+            border: 1px solid #999;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .start-button:hover {
+            background: linear-gradient(to top, #d6d6d6, #ffffff);
+        }
+
+        .start-button img {
+            width: 20px;
+            margin-right: 5px;
+        }
+
+        .start-button span {
+            font-size: 14px;
+            font-weight: bold;
+            color: black;
+        }
+
+        /* Popup (Start Menu) */
+        .popup {
+            position: absolute;
+            bottom: 50px;
+            left: 5px;
+            width: 200px;
+            background: #1e90ff;
+            color: white;
+            border: 1px solid #104e8b;
+            display: none;
+            z-index: 10;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .popup ul {
+            list-style: none;
+        }
+
+        .popup ul li {
+            padding: 5px 10px;
+            margin: 5px 0;
+            background: white;
+            color: black;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .popup ul li:hover {
+            background: #87ceeb;
+            color: white;
+        }
+
+        /* Window Popup */
+        .window {
+            position: absolute;
+            width: 400px;
+            height: 300px;
+            background: white;
+            border: 2px solid black;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 20;
+        }
+
+        .window-header {
+            background: #1e90ff;
+            padding: 10px;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .window-content {
+            padding: 10px;
+            font-size: 14px;
+            color: black;
+        }
+
+        .close-btn {
+            background: white;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!-- Desktop -->
+    <div class="desktop">
+        <!-- PWN Icon -->
+        <div class="icon" onclick="openWindow()">
+            <img src="https://via.placeholder.com/64?text=PWN" alt="PWN">
+            <span>PWN</span>
+        </div>
+    </div>
+
+    <!-- Taskbar -->
+    <div class="taskbar">
+        <div class="start-button" onclick="toggleStartMenu()">
+            <img src="https://via.placeholder.com/20?text=Start" alt="Start">
+            <span>Start</span>
+        </div>
+    </div>
+
+    <!-- Start Menu Popup -->
+    <div class="popup" id="startMenu">
+        <ul>
+            <li onclick="alert('Launching Notepad...')">Notepad</li>
+            <li onclick="alert('Opening Discord...')">Discord</li>
+            <li onclick="alert('Opening Terminal...')">Terminal</li>
+        </ul>
+    </div>
+
+    <!-- Window -->
+    <div class="window" id="pwnWindow">
+        <div class="window-header">
+            <span>PWN Window</span>
+            <button class="close-btn" onclick="closeWindow()">X</button>
+        </div>
+        <div class="window-content">
+            Discord: .pwwn
+        </div>
+    </div>
+
+    <script>
+        function toggleStartMenu() {
+            const startMenu = document.getElementById('startMenu');
+            startMenu.style.display = startMenu.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function openWindow() {
+            const window = document.getElementById('pwnWindow');
+            window.style.display = 'block';
+        }
+
+        function closeWindow() {
+            const window = document.getElementById('pwnWindow');
+            window.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
